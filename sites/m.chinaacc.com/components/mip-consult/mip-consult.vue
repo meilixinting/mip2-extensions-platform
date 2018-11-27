@@ -6,7 +6,7 @@
 
 <script>
 import xzh from 'xzh-sdk'
-import { formatParams, getLocalUrl } from '../../common/utils'
+import { formatParams } from '../../common/utils'
 
 let context = null
 
@@ -17,15 +17,10 @@ export default {
   methods: {
     init () {
       if (!context) {
-        let url = getLocalUrl()
-        console.log(url)
+        let url = window.location.href
         let paramMap = {
           'redirectUrl': url
         }
-        // 去除参数
-        // console.log('1:' + url)
-        url = url.split('#')[0]
-        // console.log('2:' + url)
         context = Promise.resolve()
           .then(() => {
             return window.fetchJsonp(

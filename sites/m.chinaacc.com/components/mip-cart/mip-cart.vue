@@ -304,8 +304,6 @@ export default {
     that.$on('watchLogin', function () {
       // 已登录
       that.loginFlag = false
-      // 重新获取购物车信息
-      that.initData()
     })
   },
   methods: {
@@ -321,7 +319,7 @@ export default {
     increase (id) {
       let inputVal = parseInt(this.$refs[id][0].value)
       if (!isNaN(inputVal)) {
-        if (inputVal > 9999) {
+        if (inputVal >= 9999) {
           let $Toast = new Toast()
           $Toast.open({
             message: '最多只能选9999本！'
@@ -336,10 +334,10 @@ export default {
     decrease (id) {
       let inputVal = parseInt(this.$refs[id][0].value)
       if (!isNaN(inputVal)) {
-        if (inputVal < 1) {
+        if (inputVal <= 1) {
           let $Toast = new Toast()
           $Toast.open({
-            message: '最少要选1本！'
+            message: '最少只能选1本！'
           })
         } else {
           this.changeBookCookie(id, inputVal - 1, 1)
@@ -355,12 +353,12 @@ export default {
       if (isNaN(inputVal)) {
         this.$refs[id][0].value = 1
       } else {
-        if (inputVal < 1) {
+        if (inputVal <= 1) {
           $Toast.open({
-            message: '最少要选1本！'
+            message: '最少只能选1本！'
           })
           this.$refs[id][0].value = 1
-        } else if (inputVal > 9999) {
+        } else if (inputVal >= 9999) {
           $Toast.open({
             message: '最多只能选9999本！'
           })
@@ -575,7 +573,7 @@ export default {
             that.popBook = true
           } else {
             if (courseArr.length > 0) {
-              that.courseTips(courseArr)
+              that.CourseTips(courseArr)
             } else {
               that.goNext()
             }
@@ -583,7 +581,7 @@ export default {
         })
       } else {
         if (courseArr.length > 0) {
-          that.courseTips(courseArr)
+          that.CourseTips(courseArr)
         } else {
           let $Toast = new Toast()
           $Toast.open({
@@ -598,10 +596,10 @@ export default {
     ensureGoOrder () {
       let courseArr = this.getSubData().courseArr
       if (courseArr.length > 0) {
-        this.courseTips(courseArr)
+        this.CourseTips(courseArr)
       }
     },
-    courseTips (arr) {
+    CourseTips (arr) {
       const that = this
       let setting = {
         order_course_list: arr.join(',')

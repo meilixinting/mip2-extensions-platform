@@ -662,8 +662,7 @@ export default {
       },
       time: 60,
       timeInterval: null,
-      onlyOne: true,
-      orderFlag: true // 控制确认下单请求点击频率
+      onlyOne: true
     }
   },
 
@@ -847,7 +846,6 @@ export default {
     },
     // 确认下单
     sureOrder () {
-      this.inputBlur()
       this.checkData()
       //   let islogin = this.userlogin.isLogin
       //   let sessionId = this.userlogin.sessionId
@@ -1031,8 +1029,8 @@ export default {
                 phone: phone
               }
               let urls =
-                'https://openapi.lanxiniu.com/Phone/send?' +
-                base.setUrlParam(updata)
+              'https://openapi.lanxiniu.com/Phone/send?' +
+              base.setUrlParam(updata)
               window
                 .fetchJsonp(urls)
                 .then(response => response.json())
@@ -1040,6 +1038,7 @@ export default {
                 .then(response => {
                   console.log('查看数据:' + JSON.stringify(response, null, 2))
                   if (response.code === 0) {
+
                   } else {
                     this.openLayer(response.msg)
                     clearInterval(this.timeInterval)
@@ -1060,7 +1059,7 @@ export default {
     },
     // 倒计时
     countDown: function (num) {
-      //   console.log(num)
+    //   console.log(num)
       this.time -= 1
       this.verCode = this.time + 's后重新获取'
       this.verCodeFlag = false
@@ -1078,37 +1077,25 @@ export default {
       }, 1000)
     },
     checkYzm () {
-      let orderFlag = this.orderFlag
-      if (orderFlag) {
-        console.log('点击确认下单按钮的请求~')
-
-        this.orderFlag = false
-
-        let updata = {
-          phone: this.userPhone,
-          code: this.yanzm
-        }
-
-        let urls =
-          'https://openapi.lanxiniu.com//Auths/login?' +
-          base.setUrlParam(updata)
-
-        window
-          .fetchJsonp(urls)
-          .then(response => response.json())
-          .catch(error => console.error('Error:', error))
-          .then(response => {
-            console.log('查看登陆后数据:' + JSON.stringify(response, null, 2))
-            if (response.code === 0) {
-              console.log('登录成功')
-              //   this.countDown(59)
-              this.upOrder(response.data.token)
-            } else {
-              this.orderFlag = true
-              this.openLayer(response.msg)
-            }
-          })
+      let updata = {
+        phone: this.userPhone,
+        code: this.yanzm
       }
+      let urls =
+        'https://openapi.lanxiniu.com//Auths/login?' + base.setUrlParam(updata)
+      window
+        .fetchJsonp(urls)
+        .then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+          console.log('查看登陆后数据:' + JSON.stringify(response, null, 2))
+          if (response.code === 0) {
+            this.countDown(59)
+            this.upOrder(response.data.token)
+          } else {
+            this.openLayer(response.msg)
+          }
+        })
     },
 
     // 支付
@@ -1267,14 +1254,6 @@ export default {
     },
     closeTips () {
       this.commewai.show = false
-    },
-    // 输入框 失去焦点
-    inputBlur () {
-      console.log('调用清除')
-      let inputs = this.$element.querySelectorAll('input:focus')
-      Array.prototype.slice.call(inputs).forEach(ele => {
-        ele.blur()
-      })
     }
   }
 }
@@ -1462,8 +1441,8 @@ export default {
       margin-left: 0.1rem;
       color: #fe6d6d;
     }
-    span.gray {
-      color: #999999;
+    span.gray{
+         color: #999999;
     }
   }
   > div:first-child {
@@ -1478,9 +1457,9 @@ export default {
   > div div:first-child {
     flex: 1;
   }
-  > div > div:last-child {
+    > div > div:last-child {
     // background: red;
-    padding: 0.2rem;
+    padding: .2rem;
   }
 }
 
@@ -1667,8 +1646,10 @@ export default {
   }
 }
 
-.details-xianghuo-two {
+.details-xianghuo-two{
+
   .details {
+
     > div:first-child {
       flex: 1;
       text-align: left;
@@ -1680,121 +1661,122 @@ export default {
     .list {
       display: flex;
       flex: 1;
-      > div {
-        flex: 1 !important;
+      >div{
+          flex: 1 !important;
       }
     }
   }
-  .list-detail-o {
-    > div:first-child {
-      flex: 2 !important;
-    }
-    > div:last-child {
-      flex: 1 !important;
-    }
+  .list-detail-o{
+      >div:first-child{
+          flex: 2 !important;
+      }
+       >div:last-child{
+          flex: 1 !important;
+      }
   }
+
 }
 
 .commewai {
-  background: #ffffff;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  z-index: 999999999;
-  height: 70%;
-  width: 90%;
-  -webkit-box-shadow: 0 32px 48px 4px rgba(0, 0, 0, 0.14);
-  box-shadow: 0 32px 48px 4px rgba(0, 0, 0, 0.14);
-  border-radius: 4px;
-  text-align: center;
-  color: #666;
-  .header {
-    text-align: right;
-    position: relative;
+    background: #ffffff;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 999999999;
+    height: 70%;
+    width: 90%;
+    -webkit-box-shadow: 0 32px 48px 4px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 32px 48px 4px rgba(0, 0, 0, 0.14);
+    border-radius: 4px;
+    text-align: center;
+    color: #666;
+    .header {
+      text-align: right;
+      position: relative;
 
-    .close {
-      position: absolute;
-      top: -12px;
-      right: -12px;
-      background: #fff;
+      .close {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        background: #fff;
 
-      font-size: 15px;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .close:active {
-      background: rgba(0, 0, 0, 0.1);
-    }
-    .close::before {
-      content: "\2716";
-    }
-  }
-  .borders {
-    height: 98%;
-  }
-  .contents {
-    margin-top: 10px;
-    height: 98%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 8px;
-    padding-top: 0;
-    .last-des {
-      margin-top: 8px;
-      text-align: left;
-      div {
-        font-size: 12px;
-      }
-    }
-  }
-  .cost-box {
-    margin-top: 8px;
-    background: #fff;
-    box-shadow: 0px 0px 8px #ccc;
-    .title {
-      padding: 10px;
-      text-align: left;
-    }
-    .ewailist {
-      > div {
-        font-size: 12px;
+        font-size: 15px;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #ddd;
-
-        > div:first-child {
-          padding: 5px 8px;
-          flex: 1;
-          text-align: left;
-        }
-        > div:last-child {
-          flex: 2;
-          text-align: left;
-          p {
-            padding: 5px 0;
-            border-bottom: 1px solid #ddd;
-          }
-          p:last-child {
-            border-bottom: none;
-          }
-        }
+        justify-content: center;
       }
-
-      > div:nth-of-type(even) {
-        background: #edf4fc;
+      .close:active {
+        background: rgba(0, 0, 0, 0.1);
       }
+      .close::before {
+        content: "\2716";
+      }
+    }
+    .borders {
+      height: 98%;
+    }
+    .contents {
+      margin-top: 10px;
+      height: 98%;
+      overflow: auto;
+      -webkit-overflow-scrolling : touch;
+      padding: 8px;
+      padding-top: 0;
+      .last-des{
+          margin-top: 8px;
+          text-align: left;
+          div{
+              font-size: 12px;
+          }
+      }
+    }
+    .cost-box {
+      margin-top: 8px;
+      background: #fff;
+      box-shadow: 0px 0px 8px #ccc;
+      .title {
+        padding: 10px;
+        text-align: left;
+      }
+      .ewailist {
+        > div {
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #ddd;
 
-      > div:nth-of-type(odd) {
-        background-color: #ffffff;
+          > div:first-child {
+            padding: 5px 8px;
+            flex: 1;
+            text-align: left;
+          }
+          > div:last-child {
+            flex: 2;
+            text-align: left;
+            p {
+              padding: 5px 0;
+              border-bottom: 1px solid #ddd;
+            }
+            p:last-child {
+              border-bottom: none;
+            }
+          }
+        }
+
+        > div:nth-of-type(even) {
+          background: #edf4fc;
+        }
+
+        > div:nth-of-type(odd) {
+          background-color: #ffffff;
+        }
       }
     }
   }
-}
 </style>

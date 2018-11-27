@@ -6,22 +6,21 @@
       <!-- <a class="yy" href="https://author.baidu.com/home/1601150861293373" target="_slef">选购课程</a> -->
       <a
         class="yy"
-        href="https://m.baidu.com/wishwing/c/m.chinaacc.com/mip/shitingList/index.shtml"
-        data-type="mip">选购课程</a>
+        href="http://m.chinaacc.com/mip/shitingList/index.shtml"
+        target="_slef">选购课程</a>
       <a
         class="yy"
         href="http://m.chinaacc.com"
         target="_blank">去看书</a>
       <a
         class="see"
-        href="https://m.baidu.com/wishwing/c/m.chinaacc.com/mip/payment/allOrder.html"
-        data-type="mip">查看我的订单</a>
+        @click="goUrl">查看我的订单</a>
     </div>
   </div>
 </template>
 
 <script>
-import { getUrlParams } from '../../common/utils'
+import { gotoUrl, getUrlParams } from '../../common/utils'
 export default {
   data () {
     return {
@@ -40,7 +39,9 @@ export default {
     }
   },
   methods: {
-
+    goUrl () {
+      gotoUrl('/payment/allOrder.html')
+    }
   }
 }
 </script>
